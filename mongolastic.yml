@@ -1,0 +1,12 @@
+misc:
+    dindex:
+        name: offDB
+        as: off
+    ctype:
+        name: products
+mongo:
+    host: localhost
+    port: 27017
+elastic:
+    host: localhost
+    port: 9300
