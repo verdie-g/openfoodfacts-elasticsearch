@@ -388,9 +388,7 @@ func parseInt64(s string) int64 {
 		return -1
 	}
 	n, err := strconv.ParseInt(s, 10, 64)
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	return n
 }
 
@@ -403,16 +401,12 @@ func parseFloat32(s string) float32 {
 		return -1.0
 	}
 	n, err := strconv.ParseFloat(s, 32)
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	return float32(n)
 }
 
 func parseDatetime(s string) time.Time {
 	t, err := time.Parse(time.RFC3339, s)
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	return t
 }

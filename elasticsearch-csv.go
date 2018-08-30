@@ -25,21 +25,17 @@ func main() {
 
 	filepath := os.Args[1]
 	f, err := os.Open(filepath)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 
 	client, err := elastic.NewClient()
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 
-	if err := recreateIndex(client, esIndex); err != nil {
-		log.Fatal(err)
-	}
-	if err := putMappingFromFile(client, esIndex, esType, os.Args[2]); err != nil {
-		log.Fatal(err)
-	}
+	err = recreateIndex(client, esIndex)
+	check(err)
+
+	err = putMappingFromFile(client, esIndex, esType, os.Args[2])
+	check(err)
+
 	bulkReq := client.Bulk()
 
 	records := make(chan []string)
@@ -56,15 +52,11 @@ func main() {
 		bulkReq = bulkReq.Add(req)
 		if n++; n%bulkSize == 0 {
 			_, err = bulkReq.Do(context.Background())
-			if err != nil {
-				log.Fatal(err)
-			}
+			check(err)
 		}
 	}
 	_, err = bulkReq.Do(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 }
 
 func readCsv(f *os.File, records chan []string) {
@@ -84,7 +76,7 @@ func readCsv(f *os.File, records chan []string) {
 					log.Println(err)
 					continue
 				default:
-					log.Fatal(err)
+					panic(err)
 				}
 			}
 		}
