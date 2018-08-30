@@ -49,7 +49,7 @@ func main() {
 		if p == nil {
 			continue
 		}
-		req := elastic.NewBulkIndexRequest().Index(esIndex).Type(esType).Id(strconv.Itoa(p.Code)).Doc(p)
+		req := elastic.NewBulkIndexRequest().Index(esIndex).Type(esType).Id(strconv.Itoa(n)).Doc(p)
 		bulkReq = bulkReq.Add(req)
 		if n%bulkSize == 0 {
 			_, err = bulkReq.Do(context.Background())

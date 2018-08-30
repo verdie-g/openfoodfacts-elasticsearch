@@ -1,7 +1,7 @@
 {
   "properties": {
     "code": {
-      "type": "long"
+      "type": "keyword"
     },
     "url": {
       "type": "keyword",

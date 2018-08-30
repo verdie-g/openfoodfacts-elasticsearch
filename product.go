@@ -16,7 +16,7 @@ func ProductFromCsvRecord(record []string, n int) (p *Product) {
 	}()
 
 	p = &Product{
-		Code:    parseInt(record[0]),
+		Code:    record[0],
 		Url:     record[1],
 		Creator: record[2],
 		// Created_t:                 record[3],
@@ -196,7 +196,7 @@ func ProductFromCsvRecord(record []string, n int) (p *Product) {
 }
 
 type Product struct {
-	Code    int    `json:"code"`
+	Code    string `json:"code"`
 	Url     string `json:"url"`
 	Creator string `json:"creator"`
 	// Created_t                                  string    `json:"created_t"`
