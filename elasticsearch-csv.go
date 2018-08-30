@@ -41,16 +41,17 @@ func main() {
 	records := make(chan []string)
 	go readCsv(f, records)
 
-	n := 1
 	<-records
+	n := 1
 	for record := range records {
+		n++
 		p := ProductFromCsvRecord(record, n)
 		if p == nil {
 			continue
 		}
 		req := elastic.NewBulkIndexRequest().Index(esIndex).Type(esType).Id(strconv.Itoa(p.Code)).Doc(p)
 		bulkReq = bulkReq.Add(req)
-		if n++; n%bulkSize == 0 {
+		if n%bulkSize == 0 {
 			_, err = bulkReq.Do(context.Background())
 			check(err)
 		}
